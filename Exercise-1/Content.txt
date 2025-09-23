@@ -1,0 +1,161 @@
+Behavioral Patterns
+1. Command Pattern Example – Remote Control
+
+Overview
+This project demonstrates the Command design pattern in Java. A remote control can execute different commands like turning the light ON or OFF. Each command is encapsulated as an object.
+
+Structure
+
+Command: Interface with execute() and undo().
+
+LightOnCommand / LightOffCommand: Concrete commands to control a Light.
+
+Light: The receiver that actually performs the ON/OFF operation.
+
+RemoteControl: The invoker that calls command methods.
+
+Main: Client that sets and executes commands.
+
+How to Run
+
+Compile: javac src/*.java Main.java
+
+Run: java Main
+
+You should see:
+
+Light is ON  
+Light is OFF  
+Undoing last command: Light is ON  
+
+2. Observer Pattern Example – YouTube Channel Notifications
+
+Overview
+This project demonstrates the Observer design pattern in Java. When a YouTube channel uploads a new video, all subscribers are notified automatically.
+
+Structure
+
+Observer: Interface with update(String videoTitle).
+
+Subscriber: Concrete observer representing a user.
+
+Channel: Subject that maintains a list of subscribers and notifies them.
+
+Main: Client to simulate channel upload and subscriber notifications.
+
+How to Run
+
+Compile: javac src/*.java Main.java
+
+Run: java Main
+
+You should see:
+
+Alice received notification: New Video - Design Patterns in Java  
+Bob received notification: New Video - Design Patterns in Java  
+
+Creational Patterns
+3. Singleton Pattern Example – Printer Spooler
+
+Overview
+This project demonstrates the Singleton design pattern in Java. A printer spooler ensures only one instance manages print requests at a time.
+
+Structure
+
+PrinterSpooler: Singleton class with a private constructor and getInstance() method.
+
+Main: Client that requests the printer spooler multiple times.
+
+How to Run
+
+Compile: javac src/*.java Main.java
+
+Run: java Main
+
+You should see:
+
+Sending print job...  
+Same instance? true  
+
+4. Factory Method Pattern Example – Shape Factory
+
+Overview
+This project demonstrates the Factory Method design pattern in Java. Different shapes (Circle, Rectangle, Square) are created using a factory instead of instantiating directly.
+
+Structure
+
+Shape: Interface with draw().
+
+Circle, Rectangle, Square: Concrete implementations.
+
+ShapeFactory: Factory class with createShape(String type).
+
+Main: Client that requests shapes from the factory.
+
+How to Run
+
+Compile: javac src/*.java Main.java
+
+Run: java Main
+
+You should see:
+
+Drawing a Circle  
+Drawing a Rectangle  
+Drawing a Square  
+
+Structural Patterns
+5. Adapter Pattern Example – Media Player
+
+Overview
+This project demonstrates the Adapter design pattern in Java. An advanced media player can play MP4 files, but the client only understands MP3. An adapter makes them compatible.
+
+Structure
+
+MediaPlayer: Interface with play(String filename).
+
+Mp3Player: Concrete class that plays MP3 files.
+
+Mp4Player: Advanced class that plays MP4 files.
+
+MediaAdapter: Adapter that allows Mp4Player to work with MediaPlayer.
+
+Main: Client to test both MP3 and MP4 playing.
+
+How to Run
+
+Compile: javac src/*.java Main.java
+
+Run: java Main
+
+You should see:
+
+Playing MP3 file: song.mp3  
+Playing MP4 file: movie.mp4  
+
+6. Decorator Pattern Example – Coffee Shop
+
+Overview
+This project demonstrates the Decorator design pattern in Java. A coffee shop sells plain coffee, and customers can add sugar or milk dynamically without modifying the base class.
+
+Structure
+
+Coffee: Interface with cost().
+
+SimpleCoffee: Base coffee implementation.
+
+MilkDecorator, SugarDecorator: Decorators that add extra features to coffee.
+
+Main: Client that orders different coffees.
+
+How to Run
+
+Compile: javac src/*.java Main.java
+
+Run: java Main
+
+You should see:
+
+Cost of Simple Coffee: 5  
+Cost of Coffee with Milk: 7  
+Cost of Coffee with Milk and Sugar: 9  
