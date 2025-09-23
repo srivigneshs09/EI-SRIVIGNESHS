@@ -20,6 +20,11 @@ In this example, a **remote control** can turn a **Light ON/OFF** and also **und
 
 ---
 
+## 📜 Class Diagram
+![ClassDiagram.png](OutputScreenShot/ClassDiagram.png)
+
+---
+
 ## 🖨️ Output Screenshots
 
 - **Turn On Light** 
