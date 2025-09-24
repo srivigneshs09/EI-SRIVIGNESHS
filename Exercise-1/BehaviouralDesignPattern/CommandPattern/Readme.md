@@ -1,6 +1,6 @@
 # Command Pattern – Remote Control
 
-## 📖 Overview
+## Overview
 This project demonstrates the **Command Design Pattern** in Java.  
 The pattern encapsulates a request as an object, allowing:
 - Parameterization of clients with different requests
@@ -11,7 +11,7 @@ In this example, a **remote control** can turn a **Light ON/OFF** and also **und
 
 ---
 
-## 🏗️ Structure
+## Structure
 - **Command** → Interface with `execute()` and `undo()`
 - **LightOnCommand / LightOffCommand** → Concrete command classes to control the Light
 - **Light** → Receiver class performing actual ON/OFF operations
@@ -20,12 +20,12 @@ In this example, a **remote control** can turn a **Light ON/OFF** and also **und
 
 ---
 
-## 📜 Class Diagram
+## Class Diagram
 ![ClassDiagram.png](OutputScreenShot/ClassDiagram.png)
 
 ---
 
-## 🖨️ Output Screenshots
+## Output Screenshots
 
 - **Turn On Light** 
 ![1.png](OutputScreenShot/1.png)
