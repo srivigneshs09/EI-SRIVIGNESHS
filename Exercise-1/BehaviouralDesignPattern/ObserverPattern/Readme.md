@@ -25,12 +25,21 @@ In this example, a **YouTube Channel** notifies all its **Subscribers** whenever
 
 ## 🖨️ Output Screenshots
 - **Create a Youtube Channel**
+
 ![CreateYoutubeChannel.png](OutputScreenShot/CreateYoutubeChannel.png)
+
 - **Adding Subscribers**
+
 ![AddingSubscribers.png](OutputScreenShot/AddingSubscribers.png)
+
 - **Uploading Videos**
+
 ![UploadingVideos.png](OutputScreenShot/UploadingVideos.png)
+
 - **Unsubscribing**
+
 ![Unsubscribing.png](OutputScreenShot/Unsubscribing.png)
+
 - **Uploading New Videos**
+
 ![UploadingNewVideo.png](OutputScreenShot/UploadingNewVideo.png)
