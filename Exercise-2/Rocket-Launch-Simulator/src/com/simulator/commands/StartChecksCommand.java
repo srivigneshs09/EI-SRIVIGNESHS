@@ -20,7 +20,6 @@ public class StartChecksCommand implements Command {
         Scanner scanner = new Scanner(System.in);
         boolean allChecksPassed = true;
 
-        // Array of checklist items
         String[] checklistItems = {
                 "Engine Systems",
                 "Telemetry Systems",
@@ -29,23 +28,20 @@ public class StartChecksCommand implements Command {
                 "Range Safety"
         };
 
-        // Prompt user for each checklist item
         for (String item : checklistItems) {
             boolean validInput = false;
             boolean isChecked = false;
 
             while (!validInput) {
-                Logger.info(item + " [checked/unchecked]: ");
+                Logger.info(item + " [y/n]: ");
                 String input = scanner.nextLine().trim().toLowerCase();
-                if (input.equalsIgnoreCase("checked")) {
+                if (input.equalsIgnoreCase("y")) {
                     validInput = true;
                     isChecked = true;
-                    Logger.info(item + " [checked/unchecked]: checked ✓");
                     Logger.success(item + " - CHECKED");
-                } else if (input.equals("unchecked")) {
+                } else if (input.equals("n")) {
                     validInput = true;
                     isChecked = false;
-                    Logger.info(item + " [checked/unchecked]: unchecked ✗");
                     Logger.warning(item + " - NOT CHECKED");
                 } else {
                     Logger.warning("Invalid input. Please enter 'checked' or 'unchecked'.");
@@ -57,7 +53,6 @@ public class StartChecksCommand implements Command {
             }
         }
 
-        // Check if all items are checked
         if (allChecksPassed) {
             Logger.success("✓ All systems are 'Go' for launch.");
             control.getRocket().setState(new ReadyForLaunchState());

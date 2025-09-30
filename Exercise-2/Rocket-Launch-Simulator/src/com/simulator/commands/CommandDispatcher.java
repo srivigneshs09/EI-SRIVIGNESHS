@@ -13,6 +13,7 @@ public class CommandDispatcher {
         commandMap.put("launch", new LaunchCommand());
         commandMap.put("fast_forward", new FastForwardCommand());
         commandMap.put("status", new StatusCommand());
+        commandMap.put("trigger_failure", new TriggerFailureCommand());
     }
 
     public void execute(String input) {

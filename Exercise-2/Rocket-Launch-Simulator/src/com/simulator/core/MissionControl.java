@@ -16,12 +16,14 @@ public class MissionControl {
     private ScheduledExecutorService executor;
     private AtomicBoolean isRunning;
     private volatile boolean missionComplete;
+    private volatile boolean isCommandExecuting;
 
     private MissionControl() {
         this.rocket = new Rocket();
         this.timeManager = new TimeManager();
         this.isRunning = new AtomicBoolean(false);
         this.missionComplete = false;
+        this.isCommandExecuting = false;
         this.executor = Executors.newSingleThreadScheduledExecutor(r -> {
             Thread t = new Thread(r, "MissionControl-Timer");
             t.setDaemon(true);
@@ -41,25 +43,29 @@ public class MissionControl {
     }
 
     public void startMission() {
-        if (!isRunning.get() && rocket.getState() instanceof ReadyForLaunchState) {
-            isRunning.set(true);
-            rocket.setState(new Stage1State());
-            timeManager.startMission();
-            executor.scheduleAtFixedRate(this::updateSimulation, 0, 1, TimeUnit.SECONDS);
-            Logger.success("LAUNCH SEQUENCE INITIATED");
-            displayTelemetry();
-        } else {
-            Logger.warning("Cannot launch in current state: " + rocket.getState().getStageName());
-            Logger.info("Please complete pre-launch checks first.");
+        synchronized (lock) {
+            if (!isRunning.get() && rocket.getState() instanceof ReadyForLaunchState) {
+                isRunning.set(true);
+                rocket.setState(new Stage1State());
+                timeManager.startMission();
+                executor.scheduleAtFixedRate(this::updateSimulation, 0, 1, TimeUnit.SECONDS);
+                Logger.success("LAUNCH SEQUENCE INITIATED");
+                displayTelemetry();
+            } else {
+                Logger.warning("Cannot launch in current state: " + rocket.getState().getStageName());
+                Logger.info("Please complete pre-launch checks first.");
+            }
         }
     }
 
     private void updateSimulation() {
-        if (isRunning.get() && !missionComplete) {
-            synchronized (this) { // Synchronize to prevent concurrent time updates
-                timeManager.incrementTime();
-                rocket.update(timeManager.getMissionElapsedTime());
-                checkStateTransitions();
+        if (isRunning.get() && !missionComplete && !isCommandExecuting) {
+            synchronized (lock) {
+                if (!isCommandExecuting) {
+                    timeManager.incrementTime();
+                    rocket.update(timeManager.getMissionElapsedTime());
+                    checkStateTransitions();
+                }
             }
         }
     }
@@ -70,10 +76,9 @@ public class MissionControl {
         int time = timeManager.getMissionElapsedTime();
 
         if (currentState instanceof Stage1State && time >= 162) {
-            Logger.info("Stage 1 separation complete. Stage 2 ignition.");
+            Logger.success("Stage 1 separation complete. Stage 2 ignition.");
             rocket.setState(new Stage2State());
             rocket.initializeStage2();
-            displayTelemetry();
         }
 
         if (currentState instanceof Stage2State && telemetry.getAltitude() >= 400) {
@@ -89,31 +94,67 @@ public class MissionControl {
             displayTelemetry();
             missionComplete = true;
         }
+
+        if (!telemetry.isEngineOn() && !(currentState instanceof InOrbitState) && !(currentState instanceof FailedState)) {
+            rocket.setState(new FailedState());
+            Logger.error("Mission Failed due to engine shutdown.");
+            displayTelemetry();
+            missionComplete = true;
+        }
+
+        if (currentState instanceof Stage2State && time >= 559 && telemetry.getAltitude() < 400) {
+            rocket.setState(new FailedState());
+            Logger.error("Mission Failed due to guidance error: insufficient altitude for orbit.");
+            displayTelemetry();
+            missionComplete = true;
+        }
     }
 
     public void fastForward(int seconds) {
-        if (!isRunning.get()) {
-            Logger.warning("Cannot fast-forward. Mission not started.");
-            return;
-        }
-        if (missionComplete) {
-            Logger.warning("Cannot fast-forward. Mission already complete.");
-            displayTelemetry();
-            return;
-        }
-
-        Logger.info(String.format("Fast-forwarding %d seconds...", seconds));
-        synchronized (this) { // Synchronize to prevent concurrent updates
-            for (int i = 0; i < seconds && !missionComplete; i++) {
-                timeManager.incrementTime();
-                rocket.update(timeManager.getMissionElapsedTime());
-                checkStateTransitions();
-                if (rocket.getState() instanceof InOrbitState || rocket.getState() instanceof FailedState) {
-                    break;
+        synchronized (lock) {
+            isCommandExecuting = true;
+            try {
+                if (!isRunning.get()) {
+                    Logger.warning("Cannot fast-forward. Mission not started.");
+                    return;
                 }
+                if (missionComplete) {
+                    Logger.warning("Cannot fast-forward. Mission already complete.");
+                    displayTelemetry();
+                    return;
+                }
+
+                Logger.info(String.format("Fast-forwarding %d seconds...", seconds));
+                for (int i = 0; i < seconds && !missionComplete; i++) {
+                    timeManager.incrementTime();
+                    rocket.update(timeManager.getMissionElapsedTime());
+                    checkStateTransitions();
+                    if (rocket.getState() instanceof InOrbitState || rocket.getState() instanceof FailedState) {
+                        break;
+                    }
+                }
+                displayTelemetry();
+            } finally {
+                isCommandExecuting = false;
             }
         }
-        displayTelemetry();
+    }
+
+    public void triggerFuelBurn() {
+        rocket.getTelemetry().setFuelBurnMultiplier(2.0); // 2x faster burn
+    }
+
+    public void triggerFuelCapacityReduction() {
+        TelemetryData telemetry = rocket.getTelemetry();
+        telemetry.setFuel(telemetry.getFuel() * 0.5); // Reduce to 50% of current fuel
+    }
+
+    public void triggerEngineOff() {
+        rocket.getTelemetry().setEngineOn(false); // Stop thrust
+    }
+
+    public void triggerGuidanceError() {
+        rocket.getTelemetry().setGuidanceErrorFactor(0.5); // 50% altitude gain
     }
 
     public void displayTelemetry() {

@@ -17,6 +17,7 @@ public class Main {
         Logger.info("  - launch : Launch the rocket");
         Logger.info("  - fast_forward <seconds> : Jump forward in time");
         Logger.info("  - status : Check current status");
+        Logger.info("  - trigger_failure <type> : Trigger a mission failure (types: fuel_burn, fuel_capacity, engine_off, guidance_error)");
         Logger.info("  - exit : Exit simulator");
         Logger.info("========================================");
 
@@ -28,7 +29,7 @@ public class Main {
             System.out.print("> ");
             String input = scanner.nextLine().trim();
             if (input.equalsIgnoreCase("exit")) {
-                Logger.info("Exiting simulator. Goodbye!");
+                Logger.info("Exiting simulator. Come back soon!");
                 missionControl.shutdown();
                 break;
             }

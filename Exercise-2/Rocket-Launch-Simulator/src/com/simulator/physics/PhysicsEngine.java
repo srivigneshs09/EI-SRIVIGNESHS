@@ -3,10 +3,8 @@ package com.simulator.physics;
 import com.simulator.core.TelemetryData;
 
 public class PhysicsEngine {
-    private TsiolkovskyCalculator calculator;
 
     public PhysicsEngine() {
-        this.calculator = new TsiolkovskyCalculator();
     }
 
     public void updateTelemetry(TelemetryData telemetry, int missionTime, int stage) {
@@ -27,10 +25,15 @@ public class PhysicsEngine {
             return;
         }
 
-        // Tuned to match expected output: 6.13 km, 882 km/h, 69.14% at T+50s
-        telemetry.setFuel(Math.max(0, 100 - (100.0 / 162 * missionTime))); // 69.14% at 50s
-        telemetry.setAltitude(6.13 / 50 * missionTime); // 6.13 km at 50s
-        telemetry.setSpeed(882.0 / 50 * missionTime); // 882 km/h at 50s
+        double fuelBurnMultiplier = telemetry.getFuelBurnMultiplier();
+        telemetry.setFuel(Math.max(0, 100 - (100.0 / 162 * missionTime * fuelBurnMultiplier)));
+
+        double altitudeGain = telemetry.isEngineOn() ? (6.13 / 50 * missionTime) : telemetry.getAltitude();
+        altitudeGain *= telemetry.getGuidanceErrorFactor();
+        telemetry.setAltitude(altitudeGain);
+
+        double speedGain = telemetry.isEngineOn() ? (882.0 / 50 * missionTime) : telemetry.getSpeed();
+        telemetry.setSpeed(speedGain);
         telemetry.setMass(RocketConstants.TOTAL_INITIAL_MASS -
                 (RocketConstants.STAGE1_PROPELLANT_MASS * (missionTime / 162.0)));
     }
@@ -42,11 +45,17 @@ public class PhysicsEngine {
             return;
         }
 
-        // Tuned to match expected output: 280.65 km, 20237 km/h, 49.62% at T+362s
         double progress = stage2Time / RocketConstants.STAGE2_BURN_TIME;
-        telemetry.setFuel(Math.max(0, 100 - (50.38 * progress))); // 49.62% at T+362s
-        telemetry.setAltitude(80 + (320 * progress)); // 280.65 km at T+362s
-        telemetry.setSpeed(8000 + (19358 * progress)); // 20237 km/h at T+362s
+
+        double fuelBurnMultiplier = telemetry.getFuelBurnMultiplier();
+        telemetry.setFuel(Math.max(0, 100 - (50.38 * progress * fuelBurnMultiplier)));
+
+        double altitudeGain = telemetry.isEngineOn() ? (80 + (320 * progress)) : telemetry.getAltitude();
+        altitudeGain *= telemetry.getGuidanceErrorFactor();
+        telemetry.setAltitude(altitudeGain);
+
+        double speedGain = telemetry.isEngineOn() ? (8000 + (19358 * progress)) : telemetry.getSpeed();
+        telemetry.setSpeed(speedGain);
         telemetry.setMass(RocketConstants.STAGE2_INITIAL_MASS +
                 RocketConstants.PAYLOAD_MASS -
                 (RocketConstants.STAGE2_PROPELLANT_MASS * progress));
