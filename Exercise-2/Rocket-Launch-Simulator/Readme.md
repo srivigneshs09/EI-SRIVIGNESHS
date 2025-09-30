@@ -1,7 +1,7 @@
 # Rocket Launch Simulator
 
 ## Problem Statement
-The **Rocket Launch Simulator** is a Java-based console application simulating a Falcon 9 rocket launch, from pre-launch checks to orbit or failure. Users interact via commands to perform checks, launch, advance time, check status, or trigger failures, with telemetry (altitude, speed, fuel, mass) updated dynamically using the Tsiolkovsky rocket equation. The simulator ensures accurate state transitions and handles edge cases and manual failure scenarios (e.g., fuel depletion, engine shutdown).
+The **Rocket Launch Simulator** is a Java-based console application simulating a Falcon 9 rocket launch, from pre-launch checks to orbit or failure. Users interact via commands to perform checks, launch, advance time, check status, or trigger failures, with telemetry (altitude, speed, fuel, mass) updated dynamically. The simulator ensures accurate state transitions and handles edge cases and manual failure scenarios (e.g., fuel depletion, engine shutdown).
 
 ## Features
 - **Interactive Commands**: `start_checks`, `launch`, `fast_forward <seconds>`, `status`, `trigger_failure <type>`, `exit`.
