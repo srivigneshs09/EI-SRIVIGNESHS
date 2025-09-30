@@ -37,7 +37,7 @@ public class StartChecksCommand implements Command {
             while (!validInput) {
                 Logger.info(item + " [checked/unchecked]: ");
                 String input = scanner.nextLine().trim().toLowerCase();
-                if (input.equals("checked")) {
+                if (input.equalsIgnoreCase("checked")) {
                     validInput = true;
                     isChecked = true;
                     Logger.info(item + " [checked/unchecked]: checked ✓");
@@ -62,7 +62,7 @@ public class StartChecksCommand implements Command {
             Logger.success("✓ All systems are 'Go' for launch.");
             control.getRocket().setState(new ReadyForLaunchState());
         } else {
-            Logger.warning("🚫 Pre-launch checks failed. Cannot proceed to launch.");
+            Logger.warning("Pre-launch checks failed. Cannot proceed to launch.");
         }
     }
 }

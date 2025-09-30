@@ -85,7 +85,7 @@ Rocket-Launch-Simulator/
    │   ├── RocketConstants.java
    ├── utils/
        ├── Logger.java         # Handles console output
-       ├── DisplayFormatter.java
+
 ```
 
 ---

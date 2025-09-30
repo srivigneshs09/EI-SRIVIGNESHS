@@ -46,7 +46,7 @@ public class MissionControl {
             rocket.setState(new Stage1State());
             timeManager.startMission();
             executor.scheduleAtFixedRate(this::updateSimulation, 0, 1, TimeUnit.SECONDS);
-            Logger.success("🚀 LAUNCH SEQUENCE INITIATED");
+            Logger.success("LAUNCH SEQUENCE INITIATED");
             displayTelemetry();
         } else {
             Logger.warning("Cannot launch in current state: " + rocket.getState().getStageName());
@@ -70,7 +70,7 @@ public class MissionControl {
         int time = timeManager.getMissionElapsedTime();
 
         if (currentState instanceof Stage1State && time >= 162) {
-            Logger.info("🔄 Stage 1 separation complete. Stage 2 ignition.");
+            Logger.info("Stage 1 separation complete. Stage 2 ignition.");
             rocket.setState(new Stage2State());
             rocket.initializeStage2();
             displayTelemetry();
@@ -79,13 +79,13 @@ public class MissionControl {
         if (currentState instanceof Stage2State && telemetry.getAltitude() >= 400) {
             rocket.setState(new InOrbitState());
             missionComplete = true;
-            Logger.success("🎯 ORBIT ACHIEVED! Mission Successful.");
+            Logger.success("ORBIT ACHIEVED! Mission Successful.");
             displayFinalTelemetry();
         }
 
         if (telemetry.getFuel() <= 0 && !(currentState instanceof InOrbitState) && !(currentState instanceof FailedState)) {
             rocket.setState(new FailedState());
-            Logger.error("❌ Mission Failed due to insufficient fuel.");
+            Logger.error("Mission Failed due to insufficient fuel.");
             displayTelemetry();
             missionComplete = true;
         }
@@ -102,7 +102,7 @@ public class MissionControl {
             return;
         }
 
-        Logger.info(String.format("⏩ Fast-forwarding %d seconds...", seconds));
+        Logger.info(String.format("Fast-forwarding %d seconds...", seconds));
         synchronized (this) { // Synchronize to prevent concurrent updates
             for (int i = 0; i < seconds && !missionComplete; i++) {
                 timeManager.incrementTime();
