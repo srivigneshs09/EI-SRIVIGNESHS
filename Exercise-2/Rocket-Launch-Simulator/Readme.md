@@ -89,5 +89,31 @@ RocketLaunchSimulator/
 
 ## Output Screenshots
 
-Coming Soon...
+- **Available Commands**
+
+![AvailableCommands.png](OutputScreenShot/AvailableCommands.png)
+
+- **Start Checks**
+
+![Start_Checks.png](OutputScreenShot/Start_Checks.png)
+
+- **Launch**
+
+![Launch.png](OutputScreenShot/Launch.png)
+
+- **Fast Forward**
+
+![fast_forward.png](OutputScreenShot/fast_forward.png)
+
+- **Status**
+
+![status.png](OutputScreenShot/status.png)
+
+- **Trigger Failure**
+
+![Trigger_Failure.png](OutputScreenShot/Trigger_Failure.png)
+
+- **Exit**
+
+![Exit.png](OutputScreenShot/Exit.png)
 
