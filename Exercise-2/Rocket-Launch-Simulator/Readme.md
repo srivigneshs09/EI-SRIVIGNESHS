@@ -72,6 +72,10 @@ RocketLaunchSimulator/
    │   ├── TriggerFailureCommand.java
    │   ├── CommandDispatcher.java
    ├── physics/
+   │   ├── strategies/
+   │   │   ├── StageUpdateStrategy.java
+   │   │   ├── Stage1UpdateStrategy.java
+   │   │   ├── Stage2UpdateStrategy.java
    │   ├── PhysicsEngine.java
    │   ├── RocketConstants.java
    ├── utils/
@@ -82,16 +86,9 @@ RocketLaunchSimulator/
 ---
 
 ## Telemetry Values and References
-- **Stage 1 (T+0s to T+162s)**:
-    - T+50s: Altitude: 6.13 km, Speed: 882 km/h, Fuel: 69.14%.
-    - T+162s: Altitude: 80 km, Speed: 8000 km/h, Fuel: 0%.
-- **Stage 2 (T+162s to T+559s)**:
-    - T+559s: Altitude: 400 km, Speed: 27358 km/h, Fuel: 49.62%.
 - **Constants** (in `RocketConstants.java`):
     - `TOTAL_INITIAL_MASS`: 549,054 kg, `STAGE1_PROPELLANT_MASS`: 417,500 kg.
-    - `STAGE2_INITIAL_MASS`: 111,500 kg, `PAYLOAD_MASS`: 22,800 kg.
-    - `STAGE1_THRUST`: 7,607 kN, `STAGE2_THRUST`: 934 kN.
-    - `STAGE1_ISP`: 282 s, `STAGE2_ISP`: 311 s.
+    - `STAGE2_INITIAL_MASS`: 138,054 kg, `STAGE2_PROPELLANT_MASS`: 107,500 kg.
 - **References**:
     - [SpaceX Falcon 9](https://www.spacex.com/vehicles/falcon-9/).
     - [NASA Orbital Mechanics](https://www.nasa.gov/).
