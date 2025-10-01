@@ -40,4 +40,8 @@ A terminal-based mini-project built using clean code principles and relevant des
 * [SpaceX Falcon 9](https://www.youtube.com/watch?v=F3E3SI2Nqrk)
 
 
+## Contact
+For any queries or suggestions, please contact me at : [srivigneshs0903@gmail.com](mailto:srivigneshs0903@gmail.com)
+
+
     Copyright © 2025 Sri Vignesh S. All rights reserved.
