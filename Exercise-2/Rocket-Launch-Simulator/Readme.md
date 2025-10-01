@@ -6,7 +6,6 @@ The **Rocket Launch Simulator** is a Java-based console application simulating a
 ## Features
 - **Interactive Commands**: `start_checks`, `launch`, `fast_forward <seconds>`, `status`, `trigger_failure <type>`, `exit`.
 - **State Transitions**: Pre-Launch, Ready, Stage-1, Stage-2, In-Orbit, Failed.
-- **Real-Time Physics**: Uses Tsiolkovsky equation for velocity and mass updates.
 - **Failure Simulation**: Manual triggers for fuel burn, fuel capacity reduction, engine shutdown, and guidance errors.
 - **Telemetry Display**: Altitude (km), speed (km/h), fuel (%), mass (kg) on demand.
 - **Error Handling**: Manages invalid inputs and premature commands.
