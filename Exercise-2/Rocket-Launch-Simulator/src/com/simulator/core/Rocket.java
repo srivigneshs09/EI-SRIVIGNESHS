@@ -26,9 +26,8 @@ public class Rocket {
 
     public void initializeStage2() {
         currentStage = 2;
-        telemetry.setFuel(100.0);
-        telemetry.setMass(RocketConstants.STAGE2_INITIAL_MASS);
-        telemetry.setAltitude(80.0); // Match expected output
+        telemetry.setMass(RocketConstants.STAGE2_INITIAL_MASS+ RocketConstants.PAYLOAD_MASS);
+        telemetry.setAltitude(80.0);
         telemetry.setSpeed(8000.0);
     }
 

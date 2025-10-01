@@ -9,14 +9,11 @@ public class RocketConstants {
     // Stage 2
     public static final double STAGE2_BURN_TIME = 397;         // seconds
     public static final double STAGE2_PROPELLANT_MASS = 107500; // kg
-    public static final double STAGE2_INITIAL_MASS = 111500;   // kg
+    public static final double STAGE2_INITIAL_MASS = 138054;   // kg
 
     // Payload
     public static final double PAYLOAD_MASS = 4354;           // kg (Dragon capsule)
 
     // Total initial mass
     public static final double TOTAL_INITIAL_MASS = 549054;   // kg
-
-    // Physics constants
-    public static final double GRAVITY = 9.81;                 // m/s²
 }

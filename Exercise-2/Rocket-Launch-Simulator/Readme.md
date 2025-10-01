@@ -3,12 +3,16 @@
 ## Problem Statement
 The **Rocket Launch Simulator** is a Java-based console application simulating a Falcon 9 rocket launch, from pre-launch checks to orbit or failure. Users interact via commands to perform checks, launch, advance time, check status, or trigger failures, with telemetry (altitude, speed, fuel, mass) updated dynamically. The simulator ensures accurate state transitions and handles edge cases and manual failure scenarios (e.g., fuel depletion, engine shutdown).
 
+---
+
 ## Features
 - **Interactive Commands**: `start_checks`, `launch`, `fast_forward <seconds>`, `status`, `trigger_failure <type>`, `exit`.
 - **State Transitions**: Pre-Launch, Ready, Stage-1, Stage-2, In-Orbit, Failed.
 - **Failure Simulation**: Manual triggers for fuel burn, fuel capacity reduction, engine shutdown, and guidance errors.
 - **Telemetry Display**: Altitude (km), speed (km/h), fuel (%), mass (kg) on demand.
 - **Error Handling**: Manages invalid inputs and premature commands.
+
+---
 
 ## Edge Cases Handled
 - **Invalid Checklist Inputs**: Accepts only `checked`/`unchecked` during `start_checks`.
@@ -17,6 +21,20 @@ The **Rocket Launch Simulator** is a Java-based console application simulating a
 - **Invalid Commands**: Rejects unknown commands (e.g., `fast`).
 - **Failure Triggers**: Rejects `trigger_failure` before mission start or with invalid types.
 - **Failure Scenarios**: Fuel depletion, engine off, or guidance errors cause mission failure.
+
+---
+
+## Fuel Consumption Model
+
+Total Initial Mass: 549,054 kg = 100%
+
+| Phase | Fuel Consumed | Cumulative Fuel Used | Remaining Mass | Fuel Percentage |
+|-------|---------------|---------------------|----------------|-----------------|
+| **Liftoff** | 0 kg | 0 kg | 549,054 kg | **100.00%** |
+| **Stage 1 Complete** | 411,000 kg | 411,000 kg | 138,054 kg | **25.13%** |
+| **Stage 2 Complete** | 107,500 kg | 518,500 kg | 30,554 kg | **5.57%** |
+
+---
 
 ## Design Patterns
 - **Singleton**: `MissionControl` ensures a single instance.
